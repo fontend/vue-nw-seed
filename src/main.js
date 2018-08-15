@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
-
 // for auto update
 import { checkUpdate } from '@/utils/update.js'
 checkUpdate()

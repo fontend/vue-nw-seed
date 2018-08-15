@@ -8,7 +8,7 @@ const events = require('events')
 
 const { manifest } = App
 const platform = (/^win/.test(process.platform) ? 'win' : /^darwin/.test(process.platform) ? 'osx' : 'linux') + (process.arch === 'ia32' ? '32' : '64')
-
+console.log(platform)
 const options = { method: 'GET', mode: 'cors', credentials: 'include' }
 let tmpUpdateJson = null
 
@@ -34,6 +34,7 @@ export function parseName (json) {
 // check version
 export function checkUpdate () {
   getUpdateJson().then(json => {
+    console.log(json)
     if (json.version === App.manifest.version) return
     window.location.hash = '/update'
   })
@@ -46,9 +47,11 @@ export function downloadHandle (savePath, json) {
   const totalSize = json.packages[platform].size
   const loadFile = fs.createWriteStream(savePath)
   let loaded = 0
-
+  console.log(uri)
   http
     .get(uri, res => {
+      console.log(savePath)
+      console.log(res)
       if (res.statusCode < 200 || res.statusCode >= 300) return ev.emit('error', res.statusCode)
       res.on('end', () => {
         loadFile.end()

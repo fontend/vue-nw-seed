@@ -17,7 +17,7 @@
 <script>
   import { getUpdateJson, parseName, downloadHandle } from '@/utils/update'
   import { Shell } from 'nw.gui'
-
+  console.log(Shell)
   export default {
     name: 'update',
     data () {
@@ -44,7 +44,7 @@
         if (!targetPath.trim()) return
 
         this.progress = 0
-        const file = downloadHandle(targetPath, this.info)
+        let file = downloadHandle(targetPath, this.info)
 
         file.on('data', num => { this.progress = Math.ceil(num * 100) })
         file.on('error', () => { this.progress = -2 })
@@ -59,6 +59,7 @@
     },
     created () {
       getUpdateJson().catch(err => { console.log(err) }).then(json => {
+        console.log(json)
         this.jsonIsLoading = false
         this.info = json
       })
